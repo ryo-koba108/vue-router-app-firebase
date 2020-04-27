@@ -15,4 +15,8 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 export const db = firebase.firestore();
-export const dbMessages = db.collection('messages');
+export const dbChannels = db.collection('channels');
+
+export const getCollectionMessages = (channelId) => {
+  return db.collection(`channels/${channelId}/messages`);
+};

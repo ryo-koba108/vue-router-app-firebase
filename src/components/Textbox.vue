@@ -25,6 +25,10 @@ export default {
     onPost: {
       type: Function,
       required: true
+    },
+    channelId: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -38,7 +42,8 @@ export default {
       this.canPost = false;
       try {
         const message = await MessageModel.save({
-          body: this.body
+          body: this.body,
+          channelId: this.channelId
         });
         this.onPost(message);
         this.body = '';

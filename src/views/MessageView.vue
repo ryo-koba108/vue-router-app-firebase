@@ -1,18 +1,22 @@
 <template>
-  <main class="main-container">
-    <TextBox :onPost="addMessage"/>
+  <div>
+    <TextBox
+      :onPost="addMessage"
+      :channelId="$route.params.channelId"
+    />
     <div class="devider"></div>
     <Spinner v-if="!initialLoaded" />
     <p class="no-messages" v-else-if="initialLoaded && messages.length === 0">投稿データ0件</p>
     <MessageList v-else :messages="reversedMessages" />
-  </main>
+  </div>
 </template>
 
 <script>
-import TextBox from './Textbox';
-import MessageList from './Messagelist';
-import MessageModel from '../models/Message';
-import Spinner from './Spinner';
+import TextBox from '../components/Textbox.vue';
+import MessageList from '../components/Messagelist.vue';
+import Spinner from '../components/Spinner.vue';
+import MessageModel from '../models/Message.js';
+
 export default {
   components: {
     TextBox,
@@ -31,9 +35,8 @@ export default {
     }
   },
   async created() {
-    const messages = await this.fetchMessages();
-    this.messages = messages;
-    this.initialLoaded = true;
+    await this.fetchMessages(this.$route.params.channelId);
+
   },
   methods: {
     addMessage(message) {
@@ -48,19 +51,21 @@ export default {
         // ユーザーにデータの取得が失敗したことを知らせる
         alert(error.message);
       }
-      return messages;
+      this.messages = messages;
+      this.initialLoaded = true;
+    }
+  },
+  watch: {
+    '$route': async function() {
+      this.initialLoaded = false;
+      this.messages = [];
+      await this.fetchMessages();
     }
   }
 }
 </script>
 
 <style scoped>
-.main-container {
-  width: calc(100% - 200px);
-  flex: 1;
-  position: absolute;
-  left: 200px;
-}
 .devider {
   border-top: 10px solid #ccc;
 }
