@@ -8,7 +8,7 @@ Vue.use(VueRouter)
     {
       path: '/:channelId',
       name: 'MessageView',
-      conponent: MessageView
+      component: MessageView
     },
     {
       path: '*',
