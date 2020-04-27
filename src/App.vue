@@ -1,28 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <Header />
+    <div class="app-container">
+      <Sidemenu />
+      <Main />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import 'normalize.css';
 
-export default {
-  name: 'App',
+import Header from './components/Header';
+import Sidemenu from './components/Sidemenu';
+import Main from './components/Main';
+
+export default{
   components: {
-    HelloWorld
+    Header,
+    Sidemenu,
+    Main,
   }
+
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.app-container{
+  display: flex;
+  padding-top: 60px;
 }
 </style>
